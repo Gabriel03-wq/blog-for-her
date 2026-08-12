@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { groq } from 'next-sanity';
 import { sanityFetch } from '@/sanity/lib/fetch';
 
-// Self-contained GROQ query to prevent missing export errors from queries.ts
 const allPostsQuery = groq`*[_type == "post"] | order(date desc) {
   _id,
   title,
@@ -140,7 +139,7 @@ export default async function HomePage() {
               Abigael Osward Sanga
             </h3>
             <p className="text-zinc-600 leading-relaxed italic">
-              "\"Observing the world in quiet nuances; weaving thought, culture, and human truth into living words.\""
+              &quot;Observing the world in quiet nuances; weaving thought, culture, and human truth into living words.&quot;
             </p>
           </div>
         </div>
