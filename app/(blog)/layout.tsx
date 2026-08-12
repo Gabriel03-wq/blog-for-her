@@ -1,19 +1,17 @@
 import "../globals.css";
-
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import {
   VisualEditing,
-  toPlainText,
   type PortableTextBlock,
 } from "next-sanity";
 import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
+import Link from "next/link";
 
 import AlertBanner from "./alert-banner";
 import PortableText from "./portable-text";
 
-import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
@@ -24,11 +22,14 @@ export async function generateMetadata(): Promise<Metadata> {
     // Metadata should never contain stega
     stega: false,
   });
-  const title = settings?.title || demo.title;
-  const description = settings?.description || demo.description;
+
+  const title = "Unspoken Horizon — Abigael Osward Sanga";
+  const description =
+    "Observing the world in quiet nuances; weaving thought, culture, and human truth into living words.";
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage);
   let metadataBase: URL | undefined = undefined;
+
   try {
     metadataBase = settings?.ogImage?.metadataBase
       ? new URL(settings.ogImage.metadataBase)
@@ -36,13 +37,14 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch {
     // ignore
   }
+
   return {
     metadataBase,
     title: {
       template: `%s | ${title}`,
       default: title,
     },
-    description: toPlainText(description),
+    description: description,
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
@@ -65,36 +67,28 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${inter.variable} bg-white text-black`}>
-      <body>
-        <section className="min-h-screen">
+    <html lang="en" className={`${inter.variable} bg-[#FAFAFA] text-[#171717]`}>
+      <body className="bg-[#FAFAFA] text-[#171717] antialiased">
+        <section className="min-h-screen flex flex-col justify-between">
           {isDraftMode && <AlertBanner />}
           <main>{children}</main>
-          <footer className="bg-accent-1 border-accent-2 border-t">
-            <div className="container mx-auto px-5">
+          <footer className="border-t border-zinc-200/80 bg-[#FAFAFA] mt-20">
+            <div className="max-w-5xl mx-auto px-6 py-12">
               {footer.length > 0 ? (
                 <PortableText
-                  className="prose-sm text-pretty bottom-0 w-full max-w-none bg-white py-12 text-center md:py-20"
+                  className="prose-sm text-pretty w-full max-w-none text-center text-zinc-600"
                   value={footer as PortableTextBlock[]}
                 />
               ) : (
-                <div className="flex flex-col items-center py-28 lg:flex-row">
-                  <h3 className="mb-10 text-center text-4xl font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
-                    Built with Next.js.
-                  </h3>
-                  <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
-                    <a
-                      href="https://nextjs.org/docs"
-                      className="mx-3 mb-6 border border-black bg-black py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black lg:mb-0 lg:px-8"
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-zinc-500">
+                  <p>© 2026 Unspoken Horizon — Abigael Osward Sanga. All rights reserved.</p>
+                  <div className="flex items-center gap-6 font-medium">
+                    <Link
+                      href="/studio"
+                      className="text-[#6C3BFF] hover:underline"
                     >
-                      Read Documentation
-                    </a>
-                    <a
-                      href="https://github.com/vercel/next.js/tree/canary/examples/cms-sanity"
-                      className="mx-3 font-bold hover:underline"
-                    >
-                      View on GitHub
-                    </a>
+                      Sanity Studio
+                    </Link>
                   </div>
                 </div>
               )}
