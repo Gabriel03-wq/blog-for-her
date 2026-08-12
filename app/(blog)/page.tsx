@@ -58,7 +58,7 @@ export default async function HomePage() {
         </h1>
 
         <p className="text-lg sm:text-xl text-zinc-600 max-w-2xl font-normal leading-relaxed italic mb-8">
-          "Observing the world in quiet nuances; weaving thought, culture, and human truth into living words."
+          &quot;Observing the world in quiet nuances; weaving thought, culture, and human truth into living words.&quot;
         </p>
 
         {/* Hero CTAs */}
@@ -140,7 +140,7 @@ export default async function HomePage() {
               Abigael Osward Sanga
             </h3>
             <p className="text-zinc-600 leading-relaxed italic">
-              "Observing the world in quiet nuances; weaving thought, culture, and human truth into living words."
+              "\"Observing the world in quiet nuances; weaving thought, culture, and human truth into living words.\""
             </p>
           </div>
         </div>
